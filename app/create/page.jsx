@@ -10,69 +10,115 @@ import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-
-
-
 function Create() {
-
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState([]);
-  const {user} = useUser();
+  const [formData, setFormData] = useState({});
+  const { user } = useUser();
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  const handelUserImput =(fieldName, fieldValue)=>{
-
+  const handleUserInput = (fieldName, fieldValue) => {
     setFormData(prev => ({
       ...prev,
-      [fieldName] : fieldValue
-    }))
+      [fieldName]: fieldValue
+    }));
+  };
 
-    console.log(formData)
-  }
-
-
-  // used to save userInput and generate course layout
-  const GenerateCourseOutLine = async () => {
+  const generateCourseOutline = async () => {
     const courseId = uuidv4();
     setLoading(true);
-    const result = await axios.post('/api/generate-course-outline' ,{
-      courseId: courseId,
-      ...formData, 
-      createdBy:user?.primaryEmailAddress?.emailAddress
-    });
-    setLoading(false);
-
-    router.replace('/dashboard');
-    //Toast notification
-    toast("Your course is generating, Click on Refresh button")
-    console.log(result)
-  }
+    try {
+      await axios.post('/api/generate-course-outline', {
+        courseId: courseId,
+        ...formData,
+        createdBy: user?.primaryEmailAddress?.emailAddress
+      });
+      router.replace('/dashboard');
+      toast.success("Course generation started!", {
+        description: "Your materials will be ready soon. We'll notify you when completed."
+      });
+    } catch (error) {
+      toast.error("Generation failed", {
+        description: "Please check your inputs and try again."
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className='flex flex-col items-center p-5 md:px-24 lg:px-36 mt-20'>
-      <h2 className='font-bold text-4xl text-blue-600'>Start Building your Personal Study Material</h2>
-      <p className='text-gray-500 text-lg'>Fill All details in order to generate study Material for your next project</p>
+    <div className="min-h-screen w-full bg-gradient-to-b from-gray-50 to-white py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto space-y-12">
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Craft Your Learning Path
+          </h2>
+          <p className="text-gray-500 text-lg">
+            Build personalized study materials in just a few steps
+          </p>
+        </div>
 
-      <div className='mt-10'>
-        {step == 0 ?
-          <SelectOption selectedStudyType={(value)=>handelUserImput('courseType', value)}/>
-          : <TopicInput SetTopic={(value) => handelUserImput('topic', value)}
-          setDifficultyLevel={(value) => handelUserImput('difficultyLevel', value)}
-          />
-        }
+        {/* Progress Indicator */}
+        <div className="flex justify-center space-x-2">
+          {[0, 1].map((index) => (
+            <div
+              key={index}
+              className={`h-2 w-8 rounded-full transition-all duration-300 ${
+                step === index ? 'bg-blue-500' : 'bg-gray-200'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Form Content */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+          {step === 0 ? (
+            <SelectOption selectedStudyType={(value) => handleUserInput('courseType', value)} />
+          ) : (
+            <TopicInput 
+              SetTopic={(value) => handleUserInput('topic', value)}
+              setDifficultyLevel={(value) => handleUserInput('difficultyLevel', value)}
+            />
+          )}
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="flex justify-between items-center">
+          {step !== 0 && (
+            <Button
+              variant="ghost"
+              onClick={() => setStep(step - 1)}
+              className="group px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="mr-2">←</span>
+              Previous Step
+            </Button>
+          )}
+          
+          {step === 0 ? (
+            <Button
+              onClick={() => setStep(step + 1)}
+              className="ml-auto bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-3 rounded-lg shadow-lg hover:shadow-md transition-all"
+            >
+              Continue →
+            </Button>
+          ) : (
+            <Button
+              onClick={generateCourseOutline}
+              disabled={loading}
+              className="ml-auto bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-8 py-3 rounded-lg shadow-lg hover:shadow-md transition-all disabled:opacity-75"
+            >
+              {loading ? (
+                <Loader className="w-5 h-5 animate-spin mr-2" />
+              ) : null}
+              {loading ? 'Generating...' : 'Create Learning Plan'}
+            </Button>
+          )}
+        </div>
       </div>
-
-      <div className='flex justify-between w-full mt-32'>
-        { step!=0?<Button variant="outline" onClick={()=>setStep(step-1)}>previous</Button> :' '}
-         { step == 0 ?<Button onClick={()=>setStep(step+1)}>Next</Button> : 
-         <Button onClick={GenerateCourseOutLine} disabled = {loading}>
-          {loading?<Loader className='animate-spin'/> :'Generate'}</Button>}
-      </div>
-
     </div>
-  )
+  );
 }
 
-export default Create
+export default Create;

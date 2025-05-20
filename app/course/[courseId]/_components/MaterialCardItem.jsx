@@ -82,41 +82,65 @@ function MaterialCardItem({ item, studyTypeContent, course, refreshData }) {
 
   };
 
-  return (
+ return (
     <Link href={'/course/'+course?.courseId+item.path}>
       <div
-        className={`border shadow-md rounded-lg bg-gray-100 p-5 h-full flex flex-col items-center justify-between ${
-          !isContentGenerated ? "grayscale" : ""
-        }`}
+        className={`group relative border border-gray-200 rounded-xl bg-white p-6 transition-all duration-300 
+          ${!isContentGenerated ? 'grayscale hover:grayscale-0' : 'hover:shadow-lg hover:-translate-y-1'}
+          ${loading ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'}`}
       >
-        <h2
-          className={`p-1 px-2 rounded-full text-[10px] mb-2 ${
-            isContentGenerated
-              ? "bg-green-500 text-white"
-              : "bg-gray-500 text-white"
-          }`}
+        {/* Status Badge */}
+        <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium shadow-sm
+          ${isContentGenerated 
+            ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white'
+            : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'}`}
         >
-          {isContentGenerated ? "Ready" : "Generate"}
-        </h2>
-        <img src={item.icon} alt={item.name} width={50} height={50} />
-        <h2 className="font-medium mt-3">{item.name}</h2>
-        <h2 className="text-gray-500 text-sm text-center">{item.desc}</h2>
-        {!isContentGenerated ? (
-          <button
-            className="p-2 rounded-2xl  bg-blue-500 mt-3 hover:cursor-pointer"
-            onClick={GenerateContent}
-            disabled={loading} // Disable button while loading
-          >
-            {loading ? <Loader className="animate-spin" /> : "Generate"}
-          </button>
-        ) : (
-          <button className="p-2 rounded-2xl bg-blue-500 mt-3 hover:cursor-pointer">
-            View
-          </button>
-        )}
+          {isContentGenerated ? "Ready" : "Pending"}
+        </div>
+
+        {/* Icon Container */}
+        <div className="w-full flex justify-center mb-4">
+          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+            <img 
+              src={item.icon} 
+              alt={item.name} 
+              className="w-10 h-10 object-contain transition-transform group-hover:scale-110"
+            />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="text-center">
+          <h2 className="text-lg font-bold text-gray-800 mb-2">{item.name}</h2>
+          <p className="text-sm text-gray-600 min-h-[3.5rem]">{item.desc}</p>
+          
+          {/* Action Button */}
+          <div className="mt-6">
+            {!isContentGenerated ? (
+              <button
+                className={`w-full py-2 rounded-lg font-medium transition-all
+                  ${loading 
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-sm hover:shadow-md'}
+                  focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2`}
+                onClick={GenerateContent}
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader className="w-4 h-4 animate-spin mx-auto" />
+                ) : "Generate Now"}
+              </button>
+            ) : (
+              <button className="w-full py-2 rounded-lg font-medium bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 hover:text-blue-700 border border-blue-100 hover:border-blue-200 transition-colors">
+                View Content →
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-   </Link>
+    </Link>
   );
+
 }
 
 export default MaterialCardItem;

@@ -23,7 +23,7 @@ export async function POST(req) {
     const aiResp = await courseOutlineAIModel.sendMessage(PROMPT);
     console.log("AI response:", aiResp);
 
-    const aiResult = JSON.parse(aiResp.response.text());
+    const aiResult = aiResp.response.text();
     console.log("Parsed AI result:", aiResult);
 
     const dbResult = await db
