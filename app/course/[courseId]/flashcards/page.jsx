@@ -4,7 +4,8 @@ import DashboardHeader from '@/app/dashboard/_components/DashboardHeader'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import FlashcardItem from './_components/flashcardItem';
+
+
 import {
     Carousel,
     CarouselContent,
@@ -12,6 +13,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import FlashcardItem from './_components/FlashcardItem';
 
 
 
