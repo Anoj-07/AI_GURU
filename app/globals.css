@@ -111,7 +111,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
+/* fro front page */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -119,4 +119,27 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
 }
