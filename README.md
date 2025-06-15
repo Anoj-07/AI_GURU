@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧠 AI Guru - AI-Powered E-Learning Platform
 
-## Getting Started
+**AI Guru** is a cutting-edge e-learning platform that leverages artificial intelligence to generate personalized study materials. Users can instantly create custom courses, flashcards, quizzes, and Q&A sessions on any topic. Built with **Next.js** and integrated with **Google Generative AI**, AI Guru transforms the learning experience into an engaging, interactive, and efficient journey.
 
-First, run the development server:
+🎥 [Sample Demo Video](https://public/TutorAi%2520Sample%2520Video.mkv)
+
+---
+
+## 🚀 Features
+
+### 📘 Course Generation
+- Create personalized courses on any topic.
+- Select difficulty level: **Beginner**, **Intermediate**, or **Advanced**.
+- AI-generated course outlines with chapters and summaries.
+
+### 📚 Study Materials
+- Auto-generated **flashcards** for quick memorization.
+- Interactive **quizzes** to test comprehension.
+- Rich **chapter notes** in markdown format.
+- AI-powered **Q&A sessions** for deeper understanding.
+
+### 🎨 Intuitive Interface
+- Clean, modern, and responsive UI.
+- Course **progress tracking** and centralized dashboard.
+- **Dark/Light theme** toggle.
+
+### 🔒 Secure Authentication
+- User login/sign-up via **Clerk**.
+- Protected routes for user-specific content.
+- Secure connection to **Neon PostgreSQL**.
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+- **Next.js 15** – React-based framework for SSR.
+- **Tailwind CSS** – Utility-first styling.
+- **Shadcn UI** – Beautifully crafted UI components.
+- **Clerk** – User authentication and session management.
+
+### Backend
+- **Drizzle ORM** – TypeScript ORM for PostgreSQL.
+- **Neon** – Serverless PostgreSQL database.
+- **Inngest** – Background job scheduling and processing.
+- **Google Generative AI** – AI-based content generation.
+
+---
+
+## 🤖 AI-Powered Capabilities
+
+- Course outline generation
+- Flashcard creation
+- Quiz generation
+- Q&A generation
+- Chapter notes creation
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- PostgreSQL database (Neon recommended)
+- Google Generative AI API key
+
+---
+
+## 🛠️ Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/anoj-07/ai_guru.git
+cd ai_guru
+npm install
+```
+## Create .env File
+```
+NEXT_PUBLIC_DATABASE_CONNECTION_STRING=your_postgres_connection_string
+NEXT_PUBLIC_GEMINI_API_KEY=your_google_genai_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Start Development Server
+```
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🧱 Configuration
+Database Setup
+ - Create a Neon PostgreSQL instance.
+  - Run Drizzle migrations:
+```
+npx drizzle-kit generate:pg
+npx drizzle-kit push:pg
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## AI Configuration
+ Modify AI models and prompt templates in configs/AiModel.js.
 
-## Learn More
+## 🙏 Acknowledgements
 
-To learn more about Next.js, take a look at the following resources:
+  - Google Generative AI – For powerful content generation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   - Vercel – For seamless deployment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - Clerk – For authentication integration.
 
-## Deploy on Vercel
+   - Shadcn UI – For beautiful UI components.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Transform your learning experience with AI Guru — where knowledge meets intelligence. 🚀
