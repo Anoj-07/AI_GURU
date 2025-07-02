@@ -3,6 +3,7 @@
 **AI Guru** is a cutting-edge e-learning platform that leverages artificial intelligence to generate personalized study materials. Users can instantly create custom courses, flashcards, quizzes, and Q&A sessions on any topic. Built with **Next.js** and integrated with **Google Generative AI**, AI Guru transforms the learning experience into an engaging, interactive, and efficient journey.
 
 🎥 WEBSITE_LINK =>  https://ai-guru-xi.vercel.app/
+Project Report => https://drive.google.com/file/d/1g9DjbePGbMuArdTST-WfKZyT5eMvxh1I/view?usp=sharing
 
 ---
 
